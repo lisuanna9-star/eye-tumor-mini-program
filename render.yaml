@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: eye-tumor-agent
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: USE_MOCK
+        value: false
+      - key: OPENAI_BASE_URL
+        value: https://api.minimaxi.com/v1
+      - key: OPENAI_MODEL
+        value: MiniMax-M2.5
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
