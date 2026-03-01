@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>眼肿瘤智能助手 H5</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="hero__badge">Eye Tumor Agent H5</p>
+        <h1 class="hero__title">眼肿瘤智能助手</h1>
+        <p class="hero__desc">
+          面向公众的眼肿瘤知识问答与风险提示工具，回答基于联网检索结果并附带来源。
+        </p>
+        <p class="hero__notice">
+          仅供健康科普参考，不能替代医生面诊、影像检查和正式诊断。
+        </p>
+      </header>
+
+      <section class="panel panel--status">
+        <div>
+          <p class="panel__label">服务状态</p>
+          <p id="healthText" class="panel__value">检测中...</p>
+        </div>
+        <button id="refreshHealthButton" class="ghost-button" type="button">刷新状态</button>
+      </section>
+
+      <section class="quick-questions">
+        <button class="chip" type="button" data-question="视网膜母细胞瘤常见于什么年龄？">
+          视网膜母细胞瘤常见于什么年龄？
+        </button>
+        <button class="chip" type="button" data-question="葡萄膜黑色素瘤有哪些症状？">
+          葡萄膜黑色素瘤有哪些症状？
+        </button>
+        <button class="chip" type="button" data-question="孩子拍照有白瞳是不是很危险？">
+          孩子拍照有白瞳是不是很危险？
+        </button>
+      </section>
+
+      <main id="messages" class="messages" aria-live="polite"></main>
+
+      <form id="composer" class="composer">
+        <label class="sr-only" for="questionInput">输入问题</label>
+        <textarea
+          id="questionInput"
+          class="composer__input"
+          placeholder="例如：葡萄膜黑色素瘤的常见症状是什么？"
+          rows="3"
+        ></textarea>
+        <div class="composer__footer">
+          <p class="composer__hint">按 Enter 发送，Shift + Enter 换行</p>
+          <button id="sendButton" class="primary-button" type="submit">发送</button>
+        </div>
+      </form>
+    </div>
+
+    <template id="messageTemplate">
+      <article class="message">
+        <div class="message__head">
+          <span class="message__role"></span>
+        </div>
+        <div class="message__content"></div>
+        <section class="sources" hidden>
+          <h3 class="sources__title">知识来源</h3>
+          <div class="sources__list"></div>
+        </section>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

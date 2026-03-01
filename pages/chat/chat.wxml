@@ -1,0 +1,70 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero__badge">Eye Tumor Agent</view>
+    <view class="hero__title">眼肿瘤知识问答助手</view>
+    <view class="hero__desc">
+      可回答眼肿瘤基础知识、筛查思路、就诊建议方向，并展示知识来源。
+    </view>
+    <view class="hero__notice">
+      仅用于健康知识参考，不能替代医生面诊与正式诊断。
+    </view>
+  </view>
+
+  <view class="suggestions">
+    <block wx:for="{{suggestions}}" wx:key="*this">
+      <view class="suggestion" bindtap="useSuggestion" data-question="{{item}}">
+        {{item}}
+      </view>
+    </block>
+  </view>
+
+  <scroll-view class="messages" scroll-y scroll-with-animation>
+    <block wx:for="{{messages}}" wx:key="id">
+      <view class="message {{item.role === 'user' ? 'message--user' : 'message--assistant'}}">
+        <view class="message__role">{{item.role === 'user' ? '我' : '助手'}}</view>
+        <view class="message__content">{{item.content}}</view>
+
+        <view wx:if="{{item.sources && item.sources.length}}" class="sources">
+          <view class="sources__title">知识来源</view>
+          <block wx:for="{{item.sources}}" wx:key="url">
+            <view class="source-card">
+              <view class="source-card__name">{{item.title}}</view>
+              <view class="source-card__meta">{{item.site}}</view>
+              <view wx:if="{{item.snippet}}" class="source-card__snippet">{{item.snippet}}</view>
+              <view class="source-card__url">{{item.url}}</view>
+              <view class="source-card__actions">
+                <button
+                  class="source-card__button"
+                  size="mini"
+                  bindtap="copySourceUrl"
+                  data-url="{{item.url}}"
+                >
+                  复制链接
+                </button>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </block>
+
+    <view wx:if="{{loading}}" class="message message--assistant">
+      <view class="message__role">助手</view>
+      <view class="message__content">正在整理资料并生成回答...</view>
+    </view>
+  </scroll-view>
+
+  <view class="composer">
+    <textarea
+      class="composer__input"
+      placeholder="例如：视网膜母细胞瘤常见于什么年龄？"
+      value="{{inputValue}}"
+      bindinput="handleInput"
+      maxlength="-1"
+      auto-height
+    />
+    <button class="composer__button" bindtap="handleSend" loading="{{loading}}">
+      发送
+    </button>
+  </view>
+</view>
